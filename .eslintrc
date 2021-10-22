@@ -5,10 +5,22 @@
         "version": "detect"
       }
     },
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "extends": [
+        "eslint:recommended", 
+        "plugin:react/recommended",
+        "standard",
+        "plugin:react/jsx-runtime",
+        "plugin:testing-library/react",
+        "plugin:jest/all"
+    ],
     "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "requireConfigFile": false,
+        "sourceType": "module"
+      },
     "env": {
-      "browser": true
+      "browser": true,
+      "es2021": true
     },
     "rules": {
       "react/prop-types": "off",
