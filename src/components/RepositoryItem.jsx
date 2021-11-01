@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import PersonalInfoBox from './PersonalInfoBox';
 import PopularityInfoBox from './PopularityInfoBox';
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
 });
 const RepositoryItem = ({ item }) => (
-  <View style={styles.container}>
+  <View style={styles.container} key={item.fullName}>
     <PersonalInfoBox item={item}/>
     <PopularityInfoBox item={item}/>
   </View>
