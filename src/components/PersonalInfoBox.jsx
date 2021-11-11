@@ -44,9 +44,9 @@ const PersonalInfoBox = ({ item }) => {
         }}
       />
       <View style={styles.personalInfo}>
-        <Text style={styles.fullName}>{item.fullName}</Text>
-        <Text style={styles.desciption}>{item.description}</Text>
-        <Text style={styles.languageTag}>{item.language}</Text>
+        <Text testID="fullName" style={styles.fullName}>{item.fullName}</Text>
+        <Text testID="description" style={styles.desciption}>{item.description}</Text>
+        <Text testID="language" style={styles.languageTag}>{item.language}</Text>
       </View>
     </View>
   );

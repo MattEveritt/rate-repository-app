@@ -8,6 +8,7 @@ import theme from '../theme';
 import useSignIn from '../hooks/useSign';
 import AuthStorage from '../utils/authStorage';
 import { ApolloClient, useApolloClient } from '@apollo/client';
+import useSignUp from '../hooks/useSignUp';
 
 const styles = StyleSheet.create({
     container: {
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingLeft: 15,
     },
-    singInButtonContainer: {
+    singUpButtonContainer: {
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
@@ -35,14 +36,14 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 4,
     },
-    signInButton: {
+    signUpButton: {
         fontSize: 20,
         color: 'white',
         textAlign: 'center',
     },
 });
 
-export const SignInForm = ({ onSubmit }) => {
+export const SignUpForm = ({ onSubmit }) => {
     return (
         <View style={styles.container}>
             <FormikTextInput
@@ -58,16 +59,23 @@ export const SignInForm = ({ onSubmit }) => {
                 style={styles.textInput}
                 testID="password"
             />
+            <FormikTextInput
+                name="passwordConfirm"
+                placeholder="Password confirmation"
+                secureTextEntry={true}
+                style={styles.textInput}
+                testID="passwordConfirm"
+            />
             <Pressable onPress={onSubmit} testID="submitButton">
-                <View style={styles.singInButtonContainer}>
-                    <Text style={styles.signInButton}>Sign in</Text>
+                <View style={styles.singUpButtonContainer}>
+                    <Text style={styles.signUpButton}>Sign up</Text>
                 </View>
             </Pressable>
         </View>
     );
 };
 
-export const SignInContainer = ({ onSubmit }) => {
+export const SignUpContainer = ({ onSubmit }) => {
     const initialValues = {
         username: '',
         password: '',
@@ -82,6 +90,10 @@ export const SignInContainer = ({ onSubmit }) => {
             .string()
             .min(1, 'Password is too short')
             .required('Password is required'),
+        passwordConfirm: yup
+            .string()
+            .oneOf([yup.ref('password'), null])
+            .required('Password is required'),
     });
 
     return (
@@ -90,23 +102,24 @@ export const SignInContainer = ({ onSubmit }) => {
             onSubmit={onSubmit}
             validationSchema={validationSchema}
         >
-            {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+            {({ handleSubmit }) => <SignUpForm onSubmit={handleSubmit} />}
         </Formik>
     );
 };
 
-const SignIn = () => {
+const SignUp = () => {
     const authClass = new AuthStorage();
     const client = useApolloClient();
     const history = useHistory();
     const [signIn] = useSignIn();
+    const [signUp] = useSignUp();
 
     const onSubmit = async (values) => {
         const { username, password } = values;
 
         try {
+            await signUp({ username, password });
             const { data } = await signIn({ username, password });
-            console.log('data', data.authorize);
             authClass.setAccessToken(data.authorize);
             const token = authClass.getAccessToken();
             client.resetStore();
@@ -118,9 +131,7 @@ const SignIn = () => {
         }
     };
 
-    return (
-        <SignInContainer onSubmit={onSubmit} />
-    );
+    return <SignUpContainer onSubmit={onSubmit} />;
 };
 
-export default SignIn;
+export default SignUp;

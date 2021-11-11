@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 const PopularityInfoBox = ({ item }) => {
   return (
     <View style={styles.popularityInfo}>
-      <View style={styles.infoTab}>
+      <View testID="stargazersCount" style={styles.infoTab}>
         {item.stargazersCount >= 1000 ? (
           <Text style={styles.counts}>
             {Math.round((item.stargazersCount / 1000) * 10) / 10}k
@@ -33,7 +33,7 @@ const PopularityInfoBox = ({ item }) => {
         )}
         <Text>Stars</Text>
       </View>
-      <View style={styles.infoTab}>
+      <View testID="forksCount" style={styles.infoTab}>
         {item.forksCount >= 1000 ? (
           <Text style={styles.counts}>
             {Math.round((item.forksCount / 1000) * 10) / 10}k
@@ -43,11 +43,11 @@ const PopularityInfoBox = ({ item }) => {
         )}
         <Text>Forks</Text>
       </View>
-      <View style={styles.infoTab}>
+      <View testID="reviewCount" style={styles.infoTab}>
         <Text style={styles.counts}>{item.reviewCount}</Text>
         <Text>Reviews</Text>
       </View>
-      <View style={styles.infoTab}>
+      <View testID="ratingAverage" style={styles.infoTab}>
         <Text style={styles.counts}>{item.ratingAverage}</Text>
         <Text>Rating</Text>
       </View>

@@ -11,7 +11,8 @@
         "standard",
         "plugin:react/jsx-runtime",
         "plugin:testing-library/react",
-        "plugin:jest/all"
+        "plugin:jest/all",
+        "plugin:jest/recommended"
     ],
     "parser": "@babel/eslint-parser",
     "parserOptions": {
